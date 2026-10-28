@@ -8,6 +8,7 @@
       <i class="fas fa-cog"></i> ตั้งค่า ผู้ใช้งาน
     </div>
 
-    <setting-users unit="{{ json_encode($unit) }}" user_id="{{ auth()->user()->id }}" user_level="{{ auth()->user()->level }}"></setting-users>
+    <setting-users unit="{{ json_encode($unit) }}" user_id="{{ auth()->user()->id }}" user_level="{{ auth()->user()->level }}"
+    user_unit_id="{{ auth()->user()->unit_id }}"></setting-users>
   </div>
   @endsection

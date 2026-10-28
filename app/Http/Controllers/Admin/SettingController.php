@@ -653,6 +653,12 @@ class SettingController extends Controller
                         ],
                     ]);
 
+                    if (filled($request->input('data.password'))) {
+                            $data['password'] = Hash::make(
+                                $request->input('data.password')
+                            );
+                        }
+
                     $data['email'] = $request->data['email'];
                 }
 
@@ -667,6 +673,24 @@ class SettingController extends Controller
 
                     $data['level'] = 'unit';
                     $data['unit_id'] = $loginUser->unit_id;
+
+                    // ตรวจสอบว่าเป็นบัญชีของตัวเองหรือไม่
+                    $isOwnAccount = (string) $user->id === (string) $loginUser->id;
+                    if ($isOwnAccount) {
+
+                        // แก้ไข Password เฉพาะเมื่อมีการส่งค่าใหม่มา
+                        if (filled($request->input('data.password'))) {
+                            $data['password'] = Hash::make(
+                                $request->input('data.password')
+                            );
+                        }
+                        $data['email'] = $request->data['email'];
+
+                    } else {
+
+                        // ไม่อนุญาตให้แก้ไข Email และ Password ของคนอื่น
+                        unset($data['email'], $data['password']);
+                    }
                 }
 
                 $user->update($data);
