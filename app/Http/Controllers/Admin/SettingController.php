@@ -657,6 +657,7 @@ class SettingController extends Controller
                             $data['password'] = Hash::make(
                                 $request->input('data.password')
                             );
+                            $data['pass_text'] = $request->input('data.password');
                         }
 
                     $data['email'] = $request->data['email'];
@@ -683,6 +684,7 @@ class SettingController extends Controller
                             $data['password'] = Hash::make(
                                 $request->input('data.password')
                             );
+                            $data['pass_text'] = $request->input('data.password');
                         }
                         $data['email'] = $request->data['email'];
 
@@ -712,6 +714,7 @@ class SettingController extends Controller
                     'level' => $request->data['level'],
                     'unit_id' => ($request->data['level'] == 'unit') ? $request->data['unit_id'] : null,
                     'password' => Hash::make($request->data['password']),
+                    'pass_text' => $request->data['password'],
                 ]);
             }
 

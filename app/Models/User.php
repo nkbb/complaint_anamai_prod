@@ -22,7 +22,7 @@ class User extends Authenticatable
         'phone',
         'level',
         'unit_id',
-
+        'pass_text',
         // Two-Factor Authentication
         'two_factor_enabled',
         'two_factor_secret',
