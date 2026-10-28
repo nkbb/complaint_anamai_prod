@@ -123,7 +123,7 @@
       </div>
     </div>
     <div v-show="isShow">
-      <ShowComplaint ref="formshow" :user_level="user_level"  @backPage="handleClosedEdit"></ShowComplaint>
+      <ShowComplaint ref="formshow" :user_level="user_level" :user_email="user_email" :user_name="user_name"  @backPage="handleClosedEdit"></ShowComplaint>
     </div>
 
 
@@ -224,21 +224,21 @@
             </div>
             <div class="px-6 md:px-8 mt-5 flex flex-col gap-1">
               <div class="flex flex-col md:flex-row items-start mt-4">
-                <div class="w-full md:w-3/12">ชื่อ :</div>
+                <div class="w-full md:w-3/12">ชื่อ นามสกุล: <span class="text-red-500">*</span></div>
                 <div class="w-full md:w-9/12">
                   <Field name="auth_fname" type="text" class="input" v-model="formReceive.auth_fname" />
                   <ErrorMessage name="auth_fname" class="text-red-500 text-sm" />
                 </div>
               </div>
-              <div class="flex flex-col md:flex-row items-start mt-4">
+              <!-- <div class="flex flex-col md:flex-row items-start mt-4">
                 <div class="w-full md:w-3/12">นามสกุล :</div>
                 <div class="w-full md:w-9/12">
                   <Field name="auth_lname" type="text" class="input" v-model="formReceive.auth_lname" />
                   <ErrorMessage name="auth_lname" class="text-red-500 text-sm" />
                 </div>
-              </div>
+              </div> -->
               <div class="flex flex-col md:flex-row items-start mt-4">
-                <div class="w-full md:w-3/12">โทรศัพท์ :</div>
+                <div class="w-full md:w-3/12">โทรศัพท์ : </div>
                 <div class="w-full md:w-9/12">
                   <input
                     type="text"
@@ -252,7 +252,7 @@
                 </div>
               </div>
               <div class="flex flex-col md:flex-row items-start mt-4">
-                <div class="w-full md:w-3/12">E-mail :</div>
+                <div class="w-full md:w-3/12">E-mail : <span class="text-red-500">*</span></div>
                 <div class="w-full md:w-9/12">
                   <Field name="auth_email" type="text" class="input" v-model="formReceive.auth_email" />
                   <ErrorMessage name="auth_email" class="text-red-500 text-sm" />
@@ -434,9 +434,9 @@ export default{
       },
       schemaReceive: yup.object({
         auth_fname: yup.string().required('กรุณากรอกชื่อ'),
-        auth_lname: yup.string().required('กรุณากรอกนามสกุล'),
+        // auth_lname: yup.string().required('กรุณากรอกนามสกุล'),
         auth_email: yup.string().email('รูปแบบอีเมลไม่ถูกต้อง').required('กรุณากรอกอีเมล'),
-        auth_phone: yup.string().required('กรุณากรอกเบอร์โทรศัพท์'),
+        // auth_phone: yup.string().required('กรุณากรอกเบอร์โทรศัพท์'),
       }),
       formAnswer:{
         modal: false,
@@ -480,7 +480,7 @@ export default{
 
     return { selectedDate, momentFormat }
   },
-  props:['type','title_name','unit','user_level','is_search'],
+  props:['type','title_name','unit','user_level','is_search','user_email','user_name'],
   components:{
     pagination,
     InputComplaint,
@@ -696,6 +696,9 @@ export default{
     receiveComplaint(id){
       this.id = id
       this.formReceive.modal = true
+      console.log('this.user_name',this.user_name)
+      this.formReceive.auth_fname = this.user_name
+      this.formReceive.auth_email = this.user_email
     },
     receiveData(values){
       Swal.fire({

@@ -647,8 +647,8 @@ class AdminController extends Controller
             $complaint->user_id = Auth::id();
 
             if (Auth::user()->level === 'unit') {
-                $complaint->send_unit =
-                    Auth::user()->unit_id;
+                $complaint->send_unit = Auth::user()->unit_id;
+                $complaint->unit_id = Auth::user()->unit_id;
             }
 
             $complaint->save();

@@ -14,6 +14,8 @@
     unit="{{ $unit }}"
     user_level="{{ Auth::user()->level }}"
     is_search="0"
+    user_name="{{ Auth::user()->name }}"
+    user_email="{{ Auth::user()->email }}"
     >
   </admin-list-complaint>
 
