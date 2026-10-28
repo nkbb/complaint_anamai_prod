@@ -51,6 +51,30 @@ class AuthenticatedSessionController extends Controller
 
         RateLimiter::clear($key);
 
+
+        // Login ครั้งแรก หรือยังไม่ได้เปิดใช้งาน 2FA
+        if (is_null($user->first_login_at) || !$user->two_factor_enabled) {
+
+            // บันทึกวันที่ Login ครั้งแรก
+            if (is_null($user->first_login_at)) {
+                $user->first_login_at = now();
+                $user->saveOrFail();
+            }
+
+            Auth::guard('web')->login($user);
+
+            $request->session()->regenerate();
+
+            $request->session()->forget([
+                '2fa_user_id',
+                '2fa_started_at',
+                '2fa_method',
+            ]);
+
+            return redirect()->intended('/dashboard');
+        }
+        
+
         // ยังไม่ Login จนกว่า OTP จะถูกต้อง
         $request->session()->regenerate();
 
