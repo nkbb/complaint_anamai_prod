@@ -599,9 +599,10 @@ class SettingController extends Controller
                 $query->where('unit_id', Auth::user()->unit_id);
             }
 
-            if ($request->has('unit_id') && $request->unit_id) {
+            if ($request->has('unit_id') && !empty($request->unit_id)) {
                 $query->where('unit_id', $request->unit_id);
             }
+
 
             $item = $query->orderBy('name', 'ASC')->get();
             foreach ($item as $k => $v) {
