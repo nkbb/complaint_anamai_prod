@@ -1018,7 +1018,7 @@ class SettingController extends Controller
             : new PublicDocument();
 
         $validated = $request->validate([
-            'id' => ['nullable', 'integer', 'exists:public_documents,id'],
+            'id' => ['nullable', 'integer', 'exists:documents,id'],
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:5000'],
             'category' => [
@@ -1104,7 +1104,7 @@ class SettingController extends Controller
         abort_unless($request->ajax(), 404);
 
         $validated = $request->validate([
-            'id' => ['required', 'integer', 'exists:public_documents,id'],
+            'id' => ['required', 'integer', 'exists:documents,id'],
         ]);
 
         $document = PublicDocument::findOrFail($validated['id']);
